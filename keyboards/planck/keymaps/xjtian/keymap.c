@@ -109,3 +109,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     RESET, KC_NO, KC_NO, KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO,   KC_NO, KC_NO
 ),
 };
+
+
+void encoder_update(bool clockwise) {
+    uint16_t held_keycode_timer = timer_read();
+
+    if (clockwise) {
+        register_code(KC_VOLU);
+        while (timer_elapsed(held_keycode_timer) < MEDIA_KEY_DELAY) {
+            // no-op
+        }
+        unregister_code(KC_VOLU);
+    } else {
+        register_code(KC_VOLD);
+        while (timer_elapsed(held_keycode_timer) < MEDIA_KEY_DELAY) {
+            // no-op
+        }
+        unregister_code(KC_VOLD);
+    }
+}
