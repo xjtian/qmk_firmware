@@ -13,6 +13,9 @@
 #define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 #define PERMISSIVE_HOLD_PER_KEY
+// See https://github.com/qmk/qmk_firmware/pull/9404
+// Currently, this branch is rebased on top of this PR
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM

@@ -139,6 +139,17 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LTS:
+        case LTN:
+        case TH_BS:
+        case TH_TAB:
+            return true;
+        default:
+            return false;
+    }
+}
 
 void matrix_init_user(void) {
     //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
