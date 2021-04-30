@@ -34,6 +34,9 @@ enum microdox_layers {
 #define TH_BS CMD_T(KC_BSPC)
 #define TH_TAB RALT_T(KC_TAB)
 
+#define VOLU KC__VOLUP
+#define VOLD KC__VOLDOWN
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x5_3( \
   //,-------------------------------------------.                    ,--------------------------------------------.
@@ -52,9 +55,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------.                    ,--------------------------------------------.
      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_7,    KC_8,    KC_9,   KC_0, \
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_4,   KC_5,     KC_6,  KC_SLSH, \
+     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_4,    KC_5,    KC_6,   KC_SLSH,\
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     KC_LSHIFT,XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_1,   KC_2,     KC_3,   KC_DOT, \
+     KC_LSHIFT,XXXXXXX,XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  KC_1,    KC_2,    KC_3,   KC_DOT, \
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                  _______,  MOA,  _______,     _______,   _______, _______ \
                              //`--------------------------'  `--------------------------'
@@ -76,9 +79,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------------------------------------------.                    ,--------------------------------------------.
      KC_F12,   KC_F7,   KC_F8,   KC_F9,  KC_MPLY,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  RESET, \
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     KC_F11,   KC_F4,   KC_F5,   KC_F6,  KC_VOLU,                      KC_LEFT, KC_DOWN,  KC_UP, KC_RIGHT, XXXXXXX,\
+     KC_F11,   KC_F4,   KC_F5,   KC_F6,   VOLU,                        KC_LEFT, KC_DOWN,  KC_UP, KC_RIGHT, XXXXXXX,\
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-     KC_F10,   KC_F1,   KC_F2,   KC_F3,  KC_VOLD,                      RGB_TOG, RGB_MOD, RGB_SAD, RGB_VAD, RGB_HUD,\
+     KC_F10,   KC_F1,   KC_F2,   KC_F3,   VOLD,                        RGB_TOG, RGB_MOD, RGB_SAD, RGB_VAD, RGB_HUD,\
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                 _______, _______, _______,    _______, _______, _______ \
                              //`--------------------------'  `--------------------------'
