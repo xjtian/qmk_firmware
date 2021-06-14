@@ -9,7 +9,7 @@ _qmk_install_prepare() {
         return 1
     fi
 
-    brew update && brew upgrade
+    brew update
 }
 
 _qmk_install() {
