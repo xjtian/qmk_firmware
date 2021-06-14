@@ -35,6 +35,10 @@ __attribute__((weak)) bool get_tapping_force_hold(uint16_t keycode, keyrecord_t 
 __attribute__((weak)) bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) { return false; }
 #    endif
 
+#    ifdef HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+__attribute__((weak)) bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) { return false; }
+#    endif
+
 static keyrecord_t tapping_key                         = {};
 static keyrecord_t waiting_buffer[WAITING_BUFFER_SIZE] = {};
 static uint8_t     waiting_buffer_head                 = 0;
@@ -120,14 +124,21 @@ bool process_tapping(keyrecord_t *keyp) {
                  * useful for long TAPPING_TERM but may prevent fast typing.
                  */
 #    if defined(TAPPING_TERM_PER_KEY) || (TAPPING_TERM >= 500) || defined(PERMISSIVE_HOLD) || defined(PERMISSIVE_HOLD_PER_KEY)
-                else if (
+                else if (((
 #        ifdef TAPPING_TERM_PER_KEY
-                    (get_tapping_term(get_event_keycode(tapping_key.event, false), keyp) >= 500) &&
+                              get_tapping_term(get_event_keycode(tapping_key.event, false), keyp)
+#        else
+                              TAPPING_TERM
 #        endif
+                              >= 500)
+
 #        ifdef PERMISSIVE_HOLD_PER_KEY
-                    !get_permissive_hold(get_event_keycode(tapping_key.event, false), keyp) &&
+                          || get_permissive_hold(get_event_keycode(tapping_key.event, false), keyp)
+#        elif defined(PERMISSIVE_HOLD)
+                          || true
 #        endif
-                    IS_RELEASED(event) && waiting_buffer_typed(event)) {
+                              ) &&
+                         IS_RELEASED(event) && waiting_buffer_typed(event)) {
                     debug("Tapping: End. No tap. Interfered by typing key\n");
                     process_record(&tapping_key);
                     tapping_key = (keyrecord_t){};
@@ -163,6 +174,19 @@ bool process_tapping(keyrecord_t *keyp) {
                     // set interrupted flag when other key preesed during tapping
                     if (event.pressed) {
                         tapping_key.tap.interrupted = true;
+#    if defined(HOLD_ON_OTHER_KEY_PRESS) || defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+#        if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+                        if (get_hold_on_other_key_press(get_event_keycode(tapping_key.event, false), &tapping_key))
+#        endif
+                        {
+                            debug("Tapping: End. No tap. Interfered by pressed key\n");
+                            process_record(&tapping_key);
+                            tapping_key = (keyrecord_t){};
+                            debug_tapping_key();
+                            // enqueue
+                            return false;
+                        }
+#    endif
                     }
                     // enqueue
                     return false;

@@ -20,11 +20,11 @@ const char *read_layer_state(void) {
   case L_BASE:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Default");
     break;
-  case L_RAISE:
-    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbols");
-    break;
   case L_LOWER:
     snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Numbers");
+    break;
+  case L_RAISE:
+    snprintf(layer_state_str, sizeof(layer_state_str), "Layer: Symbols");
     break;
   case L_ADJUST:
   case L_ADJUST_10:
